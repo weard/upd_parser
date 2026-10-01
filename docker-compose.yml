@@ -1,0 +1,14 @@
+services:
+  upd-parser:
+    build: .
+    container_name: upd_parser
+    restart: unless-stopped
+    environment:
+      POLL_INTERVAL: "30"      # секунды между проверками папки
+      OCR_DPI: "200"           # 200-250 — оптимум качество/скорость
+      OCR_LANG: "rus"
+      HEADER_ZONE: "0.45"      # доля страницы сверху для поиска заголовка
+    volumes:
+      # ИЗМЕНИТЕ пути под вашу структуру папок на Synology
+      - /volume1/Scanner/input:/app/input:ro    # только чтение — оригиналы не тронем
+      - /volume1/Scanner/output:/app/output:rw  # сюда результаты, Excel, логи, БД
